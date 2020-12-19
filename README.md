@@ -17,6 +17,6 @@
     ```
     
   - Install required packages
-    ```
+    ```console
     python -m pip install -r requirements.txt
     ```
