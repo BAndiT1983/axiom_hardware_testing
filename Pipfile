@@ -1,0 +1,13 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+tornado = ">=4.0,<5.0"
+spintop-openhtf = {extras = ["server"], version = "*"}
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"

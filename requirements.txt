@@ -1,2 +1,0 @@
-tornado==4.5.3
-spintop-openhtf==0.6.4

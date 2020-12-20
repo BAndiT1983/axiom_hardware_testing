@@ -1,8 +1,8 @@
 import os
 
-import openhtf as htf
+#import openhtf as htf
 from openhtf.plugs.user_input import UserInput
-from openhtf.util import conf
+#from openhtf.util import conf
 
 from spintop_openhtf import TestPlan
 

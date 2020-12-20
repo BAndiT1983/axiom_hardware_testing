@@ -4,21 +4,9 @@
 
 ## Setup development environment
 
-### PIP
+### pipenv
 
-  - Install required packages
+  - Set up environment for Python and install packages
     ```console
-    python -m pip install -r requirements.txt
-    ```
-
-### venv
-
-  - Set up virtual environment for Python
-    ```console
-    python -m venv venv
-    ```
-    
-  - Install required packages
-    ```console
-    python -m pip install -r requirements.txt
+    pipenv install
     ```
