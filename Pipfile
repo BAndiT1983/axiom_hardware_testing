@@ -10,4 +10,4 @@ spintop-openhtf = {extras = ["server"], version = "*"}
 [dev-packages]
 
 [requires]
-python_version = ">3.5"
+python_version = "python 3"
