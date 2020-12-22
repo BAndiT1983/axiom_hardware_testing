@@ -1,8 +1,5 @@
-import os
-
-#import openhtf as htf
 from openhtf.plugs.user_input import UserInput
-#from openhtf.util import conf
+# from openhtf.util import conf
 
 from spintop_openhtf import TestPlan
 
@@ -44,7 +41,7 @@ class GreetPlug(UserInput):
 """ Test Plan """
 
 # This defines the name of the testbench.
-plan = TestPlan('examples.hello_world')
+plan = TestPlan('hello_world')
 
 
 @plan.trigger('Hello-World')
@@ -64,7 +61,7 @@ Welcome to the **hello world** test.
 @plan.plug(greet=GreetPlug)
 def greet_tester(test, greet):
     greet.greet_tester()
-
+    # return htf.PhaseResult.STOP
 
 if __name__ == '__main__':
     plan.run()
