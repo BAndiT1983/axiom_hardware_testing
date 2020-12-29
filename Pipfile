@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 tornado = ">=4.0,<5.0"
 spintop-openhtf = {extras = ["server"], version = "*"}
+pandas = "*"
+tabulate = "*"
 
 [dev-packages]
 
