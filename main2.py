@@ -1,4 +1,5 @@
 # main.py
+import datetime
 import difflib
 import subprocess
 
@@ -12,7 +13,8 @@ from expected_data import expected_i2c_data
 """ Test Plan """
 
 # This defines the name of the testbench.
-plan = TestPlan('hello')
+current_date_time = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+plan = TestPlan('hello', store_location="logs/test_" + current_date_time)
 
 voltage_criterion = htf.Measurement("vcc_test").with_dimensions('name', 'value').in_range(3, 6)
 voltage2_criterion = htf.Measurement("vdd_test").in_range(3, 6)
@@ -58,5 +60,4 @@ def voltage_measurement(test, shell_plug):
 
 
 if __name__ == '__main__':
-    plan.no_trigger()
     plan.run()
