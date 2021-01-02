@@ -1,8 +1,8 @@
 # main.py
 import datetime
 import difflib
-import subprocess
 import random
+import subprocess
 
 import openhtf as htf
 from openhtf.plugs import BasePlug
@@ -21,7 +21,7 @@ sequence = TestSequence("Sequence1")
 plan.append(sequence)
 
 voltage_criterion = htf.Measurement("vcc_test").with_dimensions('name', 'value').in_range(3, 6)
-voltage2_criterion = htf.Measurement("vdd_test").in_range(3, 6)
+voltage2_criterion = htf.Measurement("vdd_test").in_range(4.9, 5.1)
 
 
 class ShellScriptPlug(BasePlug):
@@ -62,7 +62,10 @@ def voltage_measurement(test, shell_plug):
     split_data2 = [x.split() for x in split_data]
     test.logger.info(tabulate(split_data2))
     for name in names:
-        test.measurements[name] = random.randint(1, 8)
+        value = random.uniform(4.5, 5.5).__round__(2)
+        if value > 5.1:
+            return PhaseResult.SKIP
+        test.measurements[name] = value
 
 
 @sequence.setup('Sequence1 setup')
