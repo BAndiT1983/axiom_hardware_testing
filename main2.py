@@ -2,6 +2,7 @@
 import datetime
 import difflib
 import subprocess
+import random
 
 import openhtf as htf
 from openhtf.plugs import BasePlug
@@ -40,7 +41,6 @@ def define_voltage_measurements():
 
 
 @plan.testcase('I2C-Test')
-# @define_voltage_measurements()
 @htf.measures(htf.Measurement('i2c_response'))
 @plan.plug(shell_plug=ShellScriptPlug)
 def hello_world2(test, shell_plug):
@@ -54,12 +54,15 @@ def hello_world2(test, shell_plug):
 
 
 @plan.testcase('Voltage-Test')
+@define_voltage_measurements()
 @plan.plug(shell_plug=ShellScriptPlug)
 def voltage_measurement(test, shell_plug):
     reference_output = shell_plug.run('./return_voltage_table.sh')
     split_data = reference_output.strip().splitlines()
     split_data2 = [x.split() for x in split_data]
     test.logger.info(tabulate(split_data2))
+    for name in names:
+        test.measurements[name] = random.randint(1, 8)
 
 
 @sequence.setup('Sequence1 setup')
