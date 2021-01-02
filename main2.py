@@ -5,7 +5,7 @@ import subprocess
 
 import openhtf as htf
 from openhtf.plugs import BasePlug
-from spintop_openhtf import TestPlan
+from spintop_openhtf import TestPlan, PhaseResult, TestSequence
 from tabulate import tabulate
 
 from expected_data import expected_i2c_data
@@ -15,6 +15,9 @@ from expected_data import expected_i2c_data
 # This defines the name of the testbench.
 current_date_time = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 plan = TestPlan('hello', store_location="logs/test_" + current_date_time)
+
+sequence = TestSequence("Sequence1")
+plan.append(sequence)
 
 voltage_criterion = htf.Measurement("vcc_test").with_dimensions('name', 'value').in_range(3, 6)
 voltage2_criterion = htf.Measurement("vdd_test").in_range(3, 6)
@@ -57,6 +60,21 @@ def voltage_measurement(test, shell_plug):
     split_data = reference_output.strip().splitlines()
     split_data2 = [x.split() for x in split_data]
     test.logger.info(tabulate(split_data2))
+
+
+@sequence.setup('Sequence1 setup')
+def sequence_setup(test):
+    test.logger.info("SETUP")
+
+
+@sequence.testcase('Test1')
+def voltage_measurement2(test):
+    return PhaseResult.SKIP
+
+
+@sequence.testcase('Test2')
+def voltage_measurement3(test):
+    return PhaseResult.FAIL_AND_CONTINUE
 
 
 if __name__ == '__main__':
