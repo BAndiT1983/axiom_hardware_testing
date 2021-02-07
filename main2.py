@@ -2,25 +2,14 @@
 import datetime
 import difflib
 import random
+import subprocess
 
 import openhtf as htf
+from openhtf.plugs import BasePlug
 from spintop_openhtf import TestPlan, PhaseResult, TestSequence
 from tabulate import tabulate
 
 from expected_data import expected_i2c_data
-
-from openhtf.util import conf
-
-from plugs import ShellScriptPlug
-
-conf.declare("serial", 'A dict that contains two keys, "comport" and "baudrate"')
-conf.declare("ip_address", 'The IP Address of the testbench')
-conf.declare("test_constant", 'A test constant')
-conf.load_from_filename("config.yml")
-
-print("Serial port is {}".format(conf.serial["comport"]))
-print("IP address is {}".format(conf.ip_address))
-print("Test constant is {}".format(conf.test_constant))
 
 """ Test Plan """
 
@@ -33,6 +22,12 @@ plan.append(sequence)
 
 voltage_criterion = htf.Measurement("vcc_test").with_dimensions('name', 'value').in_range(3, 6)
 voltage2_criterion = htf.Measurement("vdd_test").in_range(4.9, 5.1)
+
+
+class ShellScriptPlug(BasePlug):
+    def run(self, shell_script):
+        return subprocess.check_output(['sh', shell_script])
+
 
 names = ["Test1", "VCC", "VDD", "REF", "GND", "GND2", "GND3", "GND4"]
 
